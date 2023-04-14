@@ -1,0 +1,71 @@
+{
+  "name": "nodejs-ts-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "npm run build && node build/src/server.ts",
+    "build": "npx -y tsc",
+    "dev": "tsnd src/server.ts",
+    "test:mocha": "mocha -r ts-node/register tests/**/**/*.test.ts --exit -t 60000",
+    "test:coverage": "nyc mocha -r ts-node/register tests/**/**/*.test.ts --exit -t 60000",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "prestart": "npm run build && npm run db:reset",
+    "predev": "npm run build && npm run db:reset"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Murilo-MRS/nodejs-ts-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Murilo-MRS/nodejs-ts-boilerplate/issues"
+  },
+  "homepage": "https://github.com/Murilo-MRS/nodejs-ts-boilerplate#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jest": "^29.5.0",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.2.1",
+    "sequelize": "^6.31.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/chai": "^4.3.4",
+    "@types/chai-http": "^4.2.0",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.11",
+    "@types/sequelize": "^4.28.14",
+    "@types/sinon": "^10.0.13",
+    "@types/validator": "^13.7.15",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-mocha": "^10.1.0",
+    "eslint-plugin-sonarjs": "^0.19.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.22",
+    "nyc": "^15.1.0",
+    "sequelize-cli": "^6.6.0",
+    "sinon": "^15.0.3",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.4"
+  }
+}
