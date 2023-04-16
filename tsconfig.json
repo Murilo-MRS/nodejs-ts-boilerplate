@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "target": "es2019",
     "module": "commonjs",
     "typeRoots": [
