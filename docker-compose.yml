@@ -8,9 +8,9 @@ services:
     platform: linux/x86_64
     working_dir: /app-backend
     # Caso queira que o container esteja atualizado durante o desenvolvimento, sem que você precise ficar fazendo down e up dos containers, descomente as 3 linhas abaixo
-    command: dev 
-    volumes: 
-      - ./backend/src:/app-backend/src
+    # command: dev 
+    # volumes: 
+    #   - ./:/app-backend/src
     depends_on:
       db:
         condition: service_healthy
@@ -21,7 +21,7 @@ services:
       # Dica: Relembre aqui da comunicação interna entre containers
       - MYSQLUSER=root
       - MYSQLPASSWORD=123456
-      - MYSQLHOST=db
+      - MYSQLHOST=localhost
       - MYSQLPORT=3306
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
