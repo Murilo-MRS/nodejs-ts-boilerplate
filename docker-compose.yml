@@ -16,27 +16,24 @@ services:
   backend:
     container_name: app_backend
     build: .
-    # Mesmo que `docker run -t`
     tty: true
-    # Mesmo que `docker run -i`
     stdin_open: true
     ports:
       - "3001:3001"
     volumes:
-      # Monta o diretório atual, com todos os dados do projeto, 
-      # dentro do diretório /app
       - ./:/app
     depends_on:
       - db
+    # caso nao queira utilizar rodar o projeto com npm start, 
+    # comente a linha abaixo e descomente a linha 29
+    # command: sh -c "npm install && npm start"
+    command: sh -c "npm install && npm run dev"
     environment:
       MYSQLHOST: db
       MYSQLUSER: "root"
       MYSQLPASSWORD: 123456
     networks:
     - api_net
-# Lista de redes que os containeres irão utilizar
-# Cria rede com nome `api_net`
-# Define o `driver` como `bridge`, que é o driver padrão do docker
 networks:
   api_net:
     driver: bridge
