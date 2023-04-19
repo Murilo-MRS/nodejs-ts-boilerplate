@@ -1,44 +1,42 @@
-version: '3.9'
+version: '3'
+
 services:
+  db:
+    container_name: app_backend_db
+    image: mysql:latest
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+    - ./:/mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+    - api_net
   backend:
     container_name: app_backend
-    build: ./
+    build: .
+    # Mesmo que `docker run -t`
+    tty: true
+    # Mesmo que `docker run -i`
+    stdin_open: true
     ports:
-      - 3001:3001
-    platform: linux/x86_64
-    working_dir: /app-backend
-    # Caso queira que o container esteja atualizado durante o desenvolvimento, sem que você precise ficar fazendo down e up dos containers, descomente as 3 linhas abaixo
-    # command: dev 
-    # volumes: 
-    #   - ./:/app-backend/src
+      - "3001:3001"
+    volumes:
+      # Monta o diretório atual, com todos os dados do projeto, 
+      # dentro do diretório /app
+      - ./:/app
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     environment:
-      - APP_PORT=3001
-      - JWT_SECRET=jwt_secret
-      # Os dados abaixo se referem ao container `db`
-      # Dica: Relembre aqui da comunicação interna entre containers
-      - MYSQLUSER=root
-      - MYSQLPASSWORD=123456
-      - MYSQLHOST=localhost
-      - MYSQLPORT=3306
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
-      timeout: 10s
-      retries: 5
-  db:
-    image: mysql:8.0.21
-    container_name: db
-    platform: linux/x86_64
-    ports:
-      - 3002:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-    restart: 'always'
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
-      timeout: 10s
-      retries: 5
-    cap_add:
-      - SYS_NICE # Deve omitir alertas menores
+      MYSQLHOST: db
+      MYSQLUSER: "root"
+      MYSQLPASSWORD: 123456
+    networks:
+    - api_net
+# Lista de redes que os containeres irão utilizar
+# Cria rede com nome `api_net`
+# Define o `driver` como `bridge`, que é o driver padrão do docker
+networks:
+  api_net:
+    driver: bridge
