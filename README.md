@@ -4,6 +4,10 @@
 
   Neste boilerplate para um back-end dockerizado utilizando modelagem de dados através do `sequelize` e`typescript`.
 
+  Como usar template e criar repositório:
+
+  ![GIF](/public/Untitled.gif)
+
 <details>
   <summary><strong> :gear: Como rodar o projeto</strong></summary></br>
 
